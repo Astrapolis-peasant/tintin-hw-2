@@ -26,8 +26,9 @@ actor BigLogger {
     };
 
     public func view(start_index : Nat, end_index : Nat) : async Logger.View<Text> {
+        assert(start_index <= end_index);
         var logger_bucket = start_index/logger_size;
-        var start = start_index - logger_bucket*logger_size;
+        var start : Nat = start_index - logger_bucket*logger_size;
         var results : List.List<Text> = List.nil();
         let max_end_index = if (end_index > current_log_number-1) current_log_number-1 else end_index;
         while (logger_bucket < max_end_index/logger_size) { 
