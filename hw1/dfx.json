@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "dfx": "0.9.3",
+  "canisters": {
+    "big_logger": {
+      "type": "motoko",
+      "main": "src/big_logger/main.mo"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": "vessel sources"
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  }
+}
