@@ -29,7 +29,7 @@ actor BigLogger {
         var logger_bucket = start_index/logger_size;
         var start = start_index - logger_bucket*logger_size;
         var results : List.List<Text> = List.nil();
-        let max_end_index = if (end_index > current_log_number) current_log_number else end_index;
+        let max_end_index = if (end_index > current_log_number-1) current_log_number-1 else end_index;
         while (logger_bucket < max_end_index/logger_size) { 
             let view = await logger_buckets.get(logger_bucket).view(start, logger_size);
             results := List.append(results, List.fromArray(view.messages));
