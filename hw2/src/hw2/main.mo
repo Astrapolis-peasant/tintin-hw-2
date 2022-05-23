@@ -15,7 +15,7 @@ shared(msg) actor class () =  self {
     #delete_canister : IC.canister_id;
   };
 
-  type Proposal = {
+  type ProposalContent = {
     proposal_id : Nat;
     var agreed : List.List<Principal>;
     action : Action;
@@ -45,7 +45,7 @@ shared(msg) actor class () =  self {
 
   var approve_threshold = 0.5;
   let controllers = Buffer.Buffer<Principal>(1);
-  let proposals = Buffer.Buffer<Proposal>(1);
+  let proposals = Buffer.Buffer<ProposalContent>(1);
   let ic : IC.Self = actor("aaaaa-aa");
   var canister_statuses =  H.TrieMap<Principal, CanisterStatus>(Principal.equal, Principal.hash);
 
@@ -59,18 +59,18 @@ shared(msg) actor class () =  self {
   };
 
   public shared (msg) func propose(action : Action, desc : Text) : async (ProposalView){
-    let proposal : Proposal =  {
+    let proposal_content : ProposalContent =  {
         proposal_id = proposals.size();
         var agreed = List.nil();
         action = action;
         desc = desc;
         var approved = false;
       };
-    proposals.add(proposal);
-    get_proposal_view(proposal, null)
+    proposals.add(proposal_content);
+    get_proposal_view(proposal_content, null)
   };
 
-  func get_proposal_view(proposal : Proposal, status: ?CanisterStatus) : (ProposalView){
+  func get_proposal_view(proposal : ProposalContent, status: ?CanisterStatus) : (ProposalView){
     {proposal_id = proposal.proposal_id; 
      agreed = List.toArray(proposal.agreed); 
      action = proposal.action; 
@@ -81,7 +81,7 @@ shared(msg) actor class () =  self {
   };
 
   public shared (msg) func approve(proposal_id : Nat) : async (?ProposalView){
-    var proposal : ?Proposal = proposals.getOpt(proposal_id);
+    var proposal : ?ProposalContent = proposals.getOpt(proposal_id);
     switch proposal {
       case null {null};
       case (?proposal) {
