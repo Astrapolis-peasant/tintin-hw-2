@@ -61,7 +61,7 @@ shared(msg) actor class () =  self {
   public shared (msg) func propose(action : Action, desc : Text) : async (ProposalView){
     let proposal_content : ProposalContent =  {
         proposal_id = proposals.size();
-        var agreed = List.nil();
+        var agreed : List.List<Principal> = List.nil();
         action = action;
         desc = desc;
         var approved = false;
