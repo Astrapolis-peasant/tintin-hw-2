@@ -5,15 +5,6 @@
     "hw3": {
       "type": "motoko",
       "main": "src/hw3/main.mo"
-    },
-    "hw3_assets": {
-      "type": "assets",
-      "source": [
-        "src/hw3_assets/assets"
-      ],
-      "dependencies": [
-        "hw3"
-      ]
     }
   },
   "defaults": {
